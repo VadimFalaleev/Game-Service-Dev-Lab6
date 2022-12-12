@@ -148,7 +148,43 @@ public void CheckSDK()
 
 ![image](https://user-images.githubusercontent.com/54228342/206977006-4e3d8fa5-8673-4756-9dd8-435f2548c41b.png)
 
-- 
+- Теперь будем добавлять видео за вознаграждение. Создадим скрипт AdReward и добавим его к объекту YandexManager.
+
+```c#
+
+using UnityEngine;
+using YG;
+
+public class AdReward : MonoBehaviour
+{
+    private void OnEnable() => YandexGame.CloseVideoEvent += Rewarded;
+    private void OnDisable() => YandexGame.CloseVideoEvent -= Rewarded;
+
+    void Rewarded(int id)
+    {
+        if(id == 1)
+        {
+            Debug.Log("Пользователь получил награду");
+        }
+        else
+        {
+            Debug.Log("Пользователь остался без награды");
+        }
+    }
+
+    public void OpenAd()
+    {
+        YandexGame.RewVideoShow(Random.Range(0,2));
+    }
+}
+
+```
+
+- Добавим кнопку на главный экран, назовем ее Ad и настроим ее так, чтобы она активировала рекламу за вознаграждение при нажатии.
+
+![image](https://user-images.githubusercontent.com/54228342/206981061-e8af1013-b846-40d9-a2ca-7bba312dc561.png)
+
+- Загрузим билд на Яндекс.Игры и проверим, что кнопка со скриптом работает.
 
 ## Задание 2
 ### Добавить в приложение интерфейс для вывода статуса наличия игрока в сети (онлайн или офлайн).
