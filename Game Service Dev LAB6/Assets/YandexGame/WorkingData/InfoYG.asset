@@ -18,7 +18,7 @@ MonoBehaviour:
   siteLock: 0
   checkAdblock: 1
   fullscreenAdChallenge: 0
-  staticRBTInGame: 0
+  staticRBTInGame: 1
   LocalizationEnable: 1
   callingLanguageCheck: 0
   translateMethod: 0
