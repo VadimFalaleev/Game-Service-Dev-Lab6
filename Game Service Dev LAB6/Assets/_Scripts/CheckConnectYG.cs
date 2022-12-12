@@ -29,6 +29,8 @@ public class CheckConnectYG : MonoBehaviour
             YandexGame.AuthDialog();
         }
 
+        YandexGame.RewVideoShow(0);
+
         GameObject scoreBO = GameObject.Find("BestScore");
         scoreBest = scoreBO.GetComponent<TextMeshProUGUI>();
         scoreBest.text = "Best Score: " + YandexGame.savesData.bestScore.ToString();

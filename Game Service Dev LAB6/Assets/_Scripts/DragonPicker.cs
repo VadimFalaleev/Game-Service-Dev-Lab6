@@ -51,6 +51,7 @@ public class DragonPicker : MonoBehaviour
 
             YandexGame.NewLeaderboardScores("TOPPlayerScore", int.Parse(scoreGT.text));
 
+            YandexGame.RewVideoShow(0);
             SceneManager.LoadScene("_0Scene");
             GetLoadSave();
         }
