@@ -238,7 +238,7 @@ public class CheckOffline : MonoBehaviour
         Instance = this;
     }
 
-    private void Start()
+    private void Awake()
     {
         InitSingleton();
         CheckOfflineStatus();
