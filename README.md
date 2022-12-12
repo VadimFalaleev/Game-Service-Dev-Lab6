@@ -76,6 +76,76 @@
 
 ![image](https://user-images.githubusercontent.com/54228342/206970299-e09dc066-882c-4ee7-87b6-8c5bb4598094.png)
 
+- Добавим видеорекламу в игру. Зайдем в скрипт DragonPicker и добавим строчку кода.
+
+```c#
+
+...
+
+public void DragonEggDestroyed()
+    {
+        GameObject[] tDragonEggArray = GameObject.FindGameObjectsWithTag("Dragon Egg");
+        foreach (GameObject tGO in tDragonEggArray)
+            Destroy(tGO);
+
+        int shieldIndex = shieldList.Count - 1;
+        GameObject tShieldGo = shieldList[shieldIndex];
+        shieldList.RemoveAt(shieldIndex);
+        Destroy(tShieldGo);
+
+        if (shieldList.Count == 0)
+        {
+            GameObject scoreGO = GameObject.Find("Score");
+            scoreGT = scoreGO.GetComponent<TextMeshProUGUI>();
+            UserSave(int.Parse(scoreGT.text), YandexGame.savesData.bestScore);
+
+            YandexGame.NewLeaderboardScores("TOPPlayerScore", int.Parse(scoreGT.text));
+
+            YandexGame.RewVideoShow(0); // new
+            SceneManager.LoadScene("_0Scene");
+            GetLoadSave();
+        }
+    }
+    
+...
+
+```
+
+- Добавим такую же строчку в другой скрипт CheckConnectYG.
+
+```c#
+
+...
+
+public void CheckSDK()
+    {
+        if (YandexGame.auth)
+        {
+            Debug.Log("User authorization ok");
+        }
+        else
+        {
+            Debug.Log("User not authorization");
+            YandexGame.AuthDialog();
+        }
+
+        YandexGame.RewVideoShow(0); // new
+
+        GameObject scoreBO = GameObject.Find("BestScore");
+        scoreBest = scoreBO.GetComponent<TextMeshProUGUI>();
+        scoreBest.text = "Best Score: " + YandexGame.savesData.bestScore.ToString();
+    }
+    
+...
+
+```
+
+- Добавим объекту YandexGame на обоих сценах компонент Viewing Ads YG, и настроим его следующим образом.
+
+![image](https://user-images.githubusercontent.com/54228342/206972806-ed8ee250-b22d-4ce2-a943-aae54c1f278a.png)
+
+- Загрузим проект на сервис и убедимся, что реклама работает.
+
 
 
 ## Задание 2
