@@ -217,6 +217,54 @@ public class AdReward : MonoBehaviour
 
 Ход работы:
 
+- В сцене меню создадим текст, назовем его Status и расположим в удобном месте.
+
+![image](https://user-images.githubusercontent.com/54228342/207038882-b79a2425-6d41-4def-9a9c-b094d3381090.png)
+
+- Далее создадим скрипт CheckOffline. Он будет проверять, сколько игрока не было в сети, и выводить эту информацию на только что созданный текст.
+
+```c#
+
+using System;
+using UnityEngine;
+using TMPro;
+
+public class CheckOffline : MonoBehaviour
+{
+    private TextMeshProUGUI statusText;
+    public static CheckOffline Instance { get; private set; }
+    private void InitSingleton()
+    {
+        Instance = this;
+    }
+
+    private void Start()
+    {
+        InitSingleton();
+        CheckOfflineStatus();
+    }
+
+    private void CheckOfflineStatus()
+    {
+        TimeSpan ts;
+        if (PlayerPrefs.HasKey("LastSession"))
+        {
+            ts = DateTime.Now - DateTime.Parse(PlayerPrefs.GetString("LastSession"));
+
+            GameObject status = GameObject.Find("Status");
+            statusText = status.GetComponent<TextMeshProUGUI>();
+            statusText.text = string.Format("Status: Online \n Вы отсутствовали: {0} день(дней/дня), {1} час(а/ов), {2} минут(у/ы), {3} секунд(у/ы)", ts.Days, ts.Hours, ts.Minutes, ts.Seconds);
+        }
+
+        PlayerPrefs.SetString("LastSession", DateTime.Now.ToString());
+    }
+}
+
+```
+
+- Сам скрипт положим на объект MainCamera, чтобы он работал и проверим его работоспособность. Он будет показывать количество дней, часов, минут и секунд, которое прошло с момента последнего визита игрока в игру.
+
+![image](https://user-images.githubusercontent.com/54228342/207039824-03bc5589-3915-4f20-b9b2-23195824191c.png)
 
 
 ## Задание 3
