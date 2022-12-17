@@ -24,11 +24,6 @@ public class CheckOffline : MonoBehaviour
         {
             ts = DateTime.Now - DateTime.Parse(PlayerPrefs.GetString("LastSession"));
 
-            if (ts.Hours >= 24) 
-            {
-                YG.YandexGame.savesData.attempts = 5;
-            }
-
             GameObject status = GameObject.Find("Status");
             statusText = status.GetComponent<TextMeshProUGUI>();
             statusText.text = string.Format("Status: Online \n Вы отсутствовали: {0} день(дней/дня), {1} час(а/ов), {2} минут(у/ы), {3} секунд(у/ы)", ts.Days, ts.Hours, ts.Minutes, ts.Seconds);

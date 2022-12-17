@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DragonEgg : MonoBehaviour
 {
-    public static float bottomY = -30f;
+    public static float bottomY = -14f;
     public AudioSource audioSource;
 
     private void OnTriggerEnter(Collider other)
