@@ -14,7 +14,15 @@ public class Achievements : MonoBehaviour
         {
             if (a.name == "10 Points" && YandexGame.savesData.bestScore >= 10) AchievementComplete(a);
             if (a.name == "20 Points" && YandexGame.savesData.bestScore >= 20) AchievementComplete(a);
-            if (a.name == "First Death" && YandexGame.savesData.deaths >= 1) AchievementComplete(a);
+            if (a.name == "30 Points" && YandexGame.savesData.bestScore >= 30) AchievementComplete(a);
+
+            if (a.name == "1 Death" && YandexGame.savesData.deaths >= 1) AchievementComplete(a);
+            if (a.name == "3 Death" && YandexGame.savesData.deaths >= 3) AchievementComplete(a);
+            if (a.name == "5 Death" && YandexGame.savesData.deaths >= 5) AchievementComplete(a);
+
+            if (a.name == "Shields" && YandexGame.savesData.brokenShields >= 20) AchievementComplete(a);
+            if (a.name == "Time" && YandexGame.savesData.time >= 300) AchievementComplete(a);
+            if (a.name == "Attempts" && YandexGame.savesData.startGames >= 10) AchievementComplete(a);
         }
     }
 

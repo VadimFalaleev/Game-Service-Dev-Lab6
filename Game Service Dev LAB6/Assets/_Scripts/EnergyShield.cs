@@ -12,7 +12,17 @@ public class EnergyShield : MonoBehaviour
     {
         GameObject scoreGO = GameObject.Find("Score");
         scoreGT = scoreGO.GetComponent<TextMeshProUGUI>();
-        scoreGT.text = "0";
+        DragonPicker DP = Camera.main.GetComponent<DragonPicker>();
+
+        if (DP.died) 
+        {
+            TextMeshProUGUI score = DP.GetScore();
+            scoreGT.text = score.text;
+        }
+        else
+        {
+            scoreGT.text = "0";
+        }
     }
 
     void Update()

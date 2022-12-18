@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DragonEgg : MonoBehaviour
 {
-    public static float bottomY = -14f;
+    public static float bottomY = -30f;
     public AudioSource audioSource;
 
     private void OnTriggerEnter(Collider other)
@@ -22,7 +22,7 @@ public class DragonEgg : MonoBehaviour
     {
         if (transform.position.y < bottomY)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
             DragonPicker apScript = Camera.main.GetComponent<DragonPicker>();
             apScript.DragonEggDestroyed();
         }

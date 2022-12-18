@@ -1,10 +1,13 @@
 using UnityEngine;
 using YG;
+using TMPro;
 
 public class AdReward : MonoBehaviour
 {
     private void OnEnable() => YandexGame.CloseVideoEvent += Rewarded;
     private void OnDisable() => YandexGame.CloseVideoEvent -= Rewarded;
+
+    private int attempts = 5;
 
     void Rewarded(int id)
     {
@@ -20,6 +23,14 @@ public class AdReward : MonoBehaviour
 
     public void OpenAd()
     {
-        YandexGame.RewVideoShow(Random.Range(0,2));
+        if (attempts > 0)
+        {
+            YandexGame.RewVideoShow(UnityEngine.Random.Range(0, 2));
+            attempts--;
+
+            GameObject attempt = GameObject.Find("Attempts");
+            TextMeshProUGUI attemptsText = attempt.GetComponent<TextMeshProUGUI>();
+            attemptsText.text = string.Format("Attempts left: {0}", attempts);
+        }
     }
 }

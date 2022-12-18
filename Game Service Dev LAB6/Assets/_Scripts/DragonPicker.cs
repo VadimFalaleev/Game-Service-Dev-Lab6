@@ -16,11 +16,34 @@ public class DragonPicker : MonoBehaviour
     public List<GameObject> shieldList;
     public TextMeshProUGUI scoreGT;
     public TextMeshProUGUI playerName;
+    public GameObject adPanel;
+    public bool died = false;
+    public float timeLeft = 0;
 
     private void Start()
     {
         if (YandexGame.SDKEnabled) GetLoadSave();
 
+        YandexGame.savesData.startGames++;
+        YandexGame.SaveProgress();
+
+        GetShields();
+    }
+
+    private void Update()
+    {
+        timeLeft += Time.deltaTime;
+        if (timeLeft >= 1)
+        {
+            YandexGame.savesData.time++;
+            YandexGame.SaveProgress();
+
+            timeLeft = 0;
+        }
+    }
+
+    public void GetShields()
+    {
         shieldList = new();
 
         for (int i = 1; i <= numEnergyShield; i++)
@@ -34,27 +57,53 @@ public class DragonPicker : MonoBehaviour
 
     public void DragonEggDestroyed()
     {
-        GameObject[] tDragonEggArray = GameObject.FindGameObjectsWithTag("Dragon Egg");
-        foreach (GameObject tGO in tDragonEggArray)
-            Destroy(tGO);
+        GameObject tDragonEgg = GameObject.FindGameObjectWithTag("Dragon Egg");
+        Destroy(tDragonEgg);
 
         int shieldIndex = shieldList.Count - 1;
         GameObject tShieldGo = shieldList[shieldIndex];
         shieldList.RemoveAt(shieldIndex);
         Destroy(tShieldGo);
 
-        if (shieldList.Count == 0)
+        YandexGame.savesData.brokenShields++;
+        YandexGame.SaveProgress();
+
+        if (shieldList.Count == 0 && !died)
         {
-            GameObject scoreGO = GameObject.Find("Score");
-            scoreGT = scoreGO.GetComponent<TextMeshProUGUI>();
-            UserSave(int.Parse(scoreGT.text), YandexGame.savesData.bestScore);
-
-            YandexGame.NewLeaderboardScores("TOPPlayerScore", int.Parse(scoreGT.text));
-
-            YandexGame.RewVideoShow(0);
-            SceneManager.LoadScene("_0Scene");
-            GetLoadSave();
+            adPanel.SetActive(true);
+            Time.timeScale = 0;
+            died = true;
         }
+        else if (shieldList.Count == 0 && died)
+        {
+            Die();
+        }
+    }
+
+    public void WatchAdd()
+    {
+        YandexGame.RewVideoShow(0);
+        adPanel.SetActive(false);
+        GetShields();
+    }
+
+    public void Die()
+    {
+        UserSave(int.Parse(GetScore().text), YandexGame.savesData.bestScore);
+
+        YandexGame.NewLeaderboardScores("TOPPlayerScore", int.Parse(scoreGT.text));
+
+        //YandexGame.RewVideoShow(0);
+        SceneManager.LoadScene("_0Scene");
+        GetLoadSave();
+    }
+
+    public TextMeshProUGUI GetScore()
+    {
+        GameObject scoreGO = GameObject.Find("Score");
+        scoreGT = scoreGO.GetComponent<TextMeshProUGUI>();
+
+        return scoreGT;
     }
 
     public void GetLoadSave()

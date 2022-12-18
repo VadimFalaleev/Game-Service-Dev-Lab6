@@ -13,6 +13,9 @@ namespace YG
         public int score;
         public int bestScore;
         public int deaths;
+        public int brokenShields;
+        public int time;
+        public int startGames;
         public int attempts = 5;
     }
 }

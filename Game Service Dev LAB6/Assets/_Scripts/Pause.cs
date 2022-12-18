@@ -8,7 +8,7 @@ public class Pause : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (!paused)
             {
@@ -23,8 +23,17 @@ public class Pause : MonoBehaviour
                 panel.SetActive(false);
             }
         }
+    }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    public void ExitGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
+
+    public void Resume()
+    {
+        Time.timeScale = 1;
+        paused = false;
+        panel.SetActive(false);
     }
 }
