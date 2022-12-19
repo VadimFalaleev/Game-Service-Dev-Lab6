@@ -36,7 +36,8 @@ public class EnemyDragon : MonoBehaviour
         else if (pos.x > leftRightDistance)
             speed = -Mathf.Abs(speed);
 
-        time += Time.deltaTime;
+        Pause pause = Camera.main.GetComponent<Pause>();
+        if(pause.paused == false) time += Time.deltaTime;
         if(time >= 30 && count < 10)
         {
             if (speed < 0) speed -= 1;
