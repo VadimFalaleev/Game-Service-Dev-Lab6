@@ -85,6 +85,9 @@ public class DragonPicker : MonoBehaviour
         YandexGame.RewVideoShow(0);
         adPanel.SetActive(false);
         GetShields();
+
+        Pause pause = Camera.main.GetComponent<Pause>();
+        pause.panel.SetActive(true);
     }
 
     public void Die()
